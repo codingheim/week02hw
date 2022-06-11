@@ -15,10 +15,10 @@ public class Board extends Timestamped{
   @Column(name = "BOARD_ID")
   private Long id;
 
-  @OneToMany(mappedBy = "user")
-  @JoinColumn(name = "USER_ID")
-  private User userid;
-  //보드와 유저의 관계 일대다
+//  @OneToMany(mappedBy = "user")
+//  @JoinColumn(name = "USER_ID")
+//  private User userid;
+//  //보드와 유저의 관계 일대다
 
   @Column(nullable = false)
   private String title;

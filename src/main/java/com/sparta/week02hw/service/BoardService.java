@@ -7,6 +7,7 @@ import com.sparta.week02hw.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,7 +23,7 @@ public class BoardService {
   }
   //read
   public List<Board> getBoards() {
-    return boardRepository.findAllByBoardIdOrderByModifiedAtDesc();
+    return boardRepository.findAllByOrderByModifiedAtDesc();
   }
 
   public Board getBoard(@PathVariable Long boardid) {

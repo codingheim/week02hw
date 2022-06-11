@@ -4,6 +4,7 @@ import com.sparta.week02hw.dto.RegisterRequestDto;
 import com.sparta.week02hw.model.User;
 import com.sparta.week02hw.repository.UserRepository;
 
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,10 @@ public class UserService {
     }
 
     //패스워드 암호화
-    String email = requestDto.getEmail();
+
 
     //@Setter 연결
-    User user = new User(name,nickname,password,email);
+    User user = new User();
     userRepository.save(user);
   }
 

@@ -3,17 +3,18 @@ package com.sparta.week02hw.controller;
 
 import com.sparta.week02hw.dto.RegisterRequestDto;
 import com.sparta.week02hw.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
-@RestController
+
+@Controller
 public class UserController {
 
-  private UserService userService;
+
+  private final UserService userService;
+
 
   @Autowired
   public UserController(UserService userService) {
@@ -26,6 +27,7 @@ public class UserController {
     return "login";
   }
 
+  //회원가입 페이지
   @PostMapping("/api/register")
   public String registerUser(RegisterRequestDto requestDto) {
     userService.registerUser(requestDto);
