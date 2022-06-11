@@ -1,9 +1,9 @@
-# week02hw
+# week02hw 내용 미완료 추후 정리 후 재작성 예정
 ## 주특기 2주차 프론트 엔드와의 협업과제 중 기술적 고민
 
 - 양방향 맵핑 ManyToOne, OneToMany 와 단방향 맵핑의 차이
     - reference : [https://www.youtube.com/watch?v=rYj8PLIE6-k](https://www.youtube.com/watch?v=rYj8PLIE6-k) NHN Colud 유튜브 참고
-        - 내용
+        - 정리
 
 ## RestAPI스펙 문서
 
@@ -27,5 +27,8 @@
 ## 2주차 과제 중 궁금증
 
 - Spring sucurity
+- annotation의 활용법
+- ORM의 이해
+- JPA 기술
 
 
