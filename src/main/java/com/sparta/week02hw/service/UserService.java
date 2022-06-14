@@ -29,7 +29,7 @@ public class UserService {
     return userRepository.findByEmailAndPassword(email,pwd);
   }
 
-  public User detailsUser(Long _id) {
+  public User mypageOfUser(Long _id) {
     return userRepository.findById(_id).orElseThrow(
             () -> new NullPointerException("아이디가 존재하지 않습니다")
     );

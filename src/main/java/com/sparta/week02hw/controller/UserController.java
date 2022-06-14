@@ -24,7 +24,8 @@ public class UserController {
   }
 
   @GetMapping("/api/mypage/{userId}")
-  public User mypageOfUser(@PathVariable Long userId) {
+  public User userMypage(@PathVariable Long userId) {
+    userService.mypageOfUser(userId);
     return new User();
   }
 }
