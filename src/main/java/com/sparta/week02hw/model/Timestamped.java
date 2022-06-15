@@ -1,11 +1,11 @@
 package com.sparta.week02hw.model;
 
 import lombok.Getter;
-import org.hibernate.annotations.Entity;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -22,5 +22,5 @@ public abstract class Timestamped {
   @LastModifiedDate
   private LocalDateTime modifiedAt;
 
-
 }
+
