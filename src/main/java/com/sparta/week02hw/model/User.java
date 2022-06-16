@@ -1,18 +1,15 @@
 package com.sparta.week02hw.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.week02hw.dto.UserRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "USER")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Entity
@@ -38,9 +35,18 @@ public class User extends Timestamped {
   @Builder.Default
   private List<String> roles = new ArrayList<>();
 
-  @JsonIgnore
-  @OneToMany(mappedBy = "writerId", cascade = CascadeType.ALL)
-  private List<Board> boards;
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+  private List<Board> boardList = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+  private List<Good> goodList = new ArrayList<>();
+
+
+  public void addGood(Good good) {
+    good.setUser(this);
+    this.goodList.add(good);
+  }
+
 
   public User(UserRequestDto requestDto) {
 
@@ -58,6 +64,10 @@ public class User extends Timestamped {
     this.roles = roles;
     this.email = email;
     this.nickname = nickname;
+  }
+
+  public User() {
+
   }
 
 }

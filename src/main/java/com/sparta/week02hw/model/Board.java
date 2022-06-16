@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "BOARD")
 @Entity
@@ -31,9 +33,18 @@ public class Board extends Timestamped{
   @Column(nullable = false)
   private int layout;
 
-  @ManyToOne
-  @JoinColumn(name = "User_id")
-  private User writerId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id",nullable = false)
+  private User user;
+
+  @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, orphanRemoval = true)
+  private List<Good> goodList = new ArrayList<>();
+
+
+  public void addGood(Good Good){
+    Good.setBoard(this);
+    this.goodList.add(Good);
+  }
 
   @Builder
   //Controller PostMapping 연결
