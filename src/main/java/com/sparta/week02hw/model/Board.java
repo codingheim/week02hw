@@ -37,14 +37,14 @@ public class Board extends Timestamped{
   @JoinColumn(name = "user_id",nullable = false)
   private User user;
 
-//  @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, orphanRemoval = true)
-//  private List<Good> goodList = new ArrayList<>();
+  @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, orphanRemoval = true)
+  private List<Good> goodList = new ArrayList<>();
 
 
-//  public void addGood(Good Good){
-//    Good.setBoard(this);
-//    this.goodList.add(Good);
-//  }
+  public void addGood(Good Good){
+    Good.setBoard(this);
+    this.goodList.add(Good);
+  }
 
   @Builder
   //Controller PostMapping 연결
