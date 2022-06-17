@@ -18,10 +18,10 @@ public class GoodController {
 
 
 
-  @GetMapping("/api/board/{boardId}/like")
-  public String GoLikes(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-    CheckedController.userchecker(userDetails);
-    return goodService.findGood(boardId,userDetails);
-  }
+//  @GetMapping("/api/board/{boardId}/like")
+//  public String findGood(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+//    CheckedController.userchecker(userDetails);
+//    return goodService.findGood(boardId,userDetails);
+//  }
 
 }
