@@ -1,11 +1,12 @@
 package com.sparta.week02hw.service;
 
+
 import com.sparta.week02hw.dto.RegisterRequestDto;
 import com.sparta.week02hw.dto.UserRequestDto;
+import com.sparta.week02hw.jwt.JwtTokenProvider;
 import com.sparta.week02hw.model.User;
 import com.sparta.week02hw.repository.UserRepository;
-import com.sparta.week02hw.security.JwtTokenProvider;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,57 +14,41 @@ import java.util.Collections;
 import java.util.Optional;
 
 
-@RequiredArgsConstructor
 @Service
-public class UserService {
 
-  private final PasswordEncoder passwordEncoder;
+public class UserService {
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider jwtTokenProvider;
 
-
-  public void createUser(User requestDto) {
-    String email = requestDto.getEmail();
-    // 회원 ID 중복 확인
-    Optional<User> found = userRepository.findByEmail(email);
-    if (found.isPresent()) {
-      throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
-    }
-
-
-    userRepository.save(User.builder()
-            .name(requestDto.getName())
-            .password(passwordEncoder.encode(requestDto.getPassword()))
-            .roles(Collections.singletonList("ROLE_USER"))
-            .email(email)
-            .nickname(requestDto.getNickname())
-            .build()
-    );
+  @Autowired
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+    this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
+    this.jwtTokenProvider = jwtTokenProvider;
   }
 
-
-  public void registerUser(RegisterRequestDto registerDto) {
-    String email = registerDto.getEmail();
-    // 회원 ID 중복 확인
+  public void registerUser(RegisterRequestDto registerRequestDto) {
+    String email = registerRequestDto.getEmail();
     Optional<User> found = userRepository.findByEmail(email);
     if (found.isPresent()) {
       throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
     }
     userRepository.save(User.builder()
-            .password(passwordEncoder.encode(registerDto.getPassword()))
+            .password(passwordEncoder.encode(registerRequestDto.getPassword()))
             .roles(Collections.singletonList("ROLE_USER"))
             .email(email)
-            .nickname(registerDto.getNickname())
+            .nickname(registerRequestDto.getNickname())
             .build());
   }
 
-  public String loginUser(UserRequestDto requestDto) {
-    User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(()
-            -> new IllegalArgumentException("잘못된 이메일입니다."));
-
-    if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+  public String loginUser(UserRequestDto userDto) {
+    User user = userRepository.findByEmail(userDto.getEmail())
+            .orElseThrow(() -> new IllegalArgumentException("ID를 찾을 수 없습니다."));
+    if(!passwordEncoder.matches(userDto.getPassword(),user.getPassword())){
       throw new IllegalArgumentException("잘못된 비밀번호입니다.");
     }
-    return jwtTokenProvider.createToken(user.getName(), user.getRoles());
+    return jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
   }
+
 }
